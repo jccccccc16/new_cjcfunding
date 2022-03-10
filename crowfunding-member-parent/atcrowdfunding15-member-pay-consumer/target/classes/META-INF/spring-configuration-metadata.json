@@ -1,0 +1,52 @@
+{
+  "groups": [
+    {
+      "name": "ali.pay",
+      "type": "com.cjc.crow.config.AlipayProperties",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ali.pay.alipay-public-key",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.app-id",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.charset",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.gateway-url",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.merchant-private-key",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.notify-url",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.return-url",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    },
+    {
+      "name": "ali.pay.sign-type",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.AlipayProperties"
+    }
+  ],
+  "hints": []
+}

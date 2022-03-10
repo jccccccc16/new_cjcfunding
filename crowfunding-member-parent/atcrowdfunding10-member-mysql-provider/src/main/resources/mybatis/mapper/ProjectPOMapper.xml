@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjc.crow.mapper.ProjectPOMapper">
+    <resultMap id="BaseResultMap" type="com.cjc.crow.entity.ProjectPO">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+        <result column="project_description" property="projectDescription" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="BIGINT"/>
+        <result column="day" property="day" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="deploydate" property="deploydate" jdbcType="VARCHAR"/>
+        <result column="supportmoney" property="supportmoney" jdbcType="BIGINT"/>
+        <result column="supporter" property="supporter" jdbcType="INTEGER"/>
+        <result column="completion" property="completion" jdbcType="INTEGER"/>
+        <result column="memberid" property="memberid" jdbcType="INTEGER"/>
+        <result column="createdate" property="createdate" jdbcType="VARCHAR"/>
+        <result column="follower" property="follower" jdbcType="INTEGER"/>
+        <result column="header_picture_path" property="headerPicturePath" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, project_name, project_description, money, day, status, deploydate, supportmoney, 
+    supporter, completion, memberid, createdate, follower, header_picture_path
+  </sql>
+
+    <resultMap id="detailProjectResultMap" type="com.cjc.crow.entity.ProjectDetailVO">
+
+        <id column="id" property="projectId"/>
+        <result column="project_name" property="projectName"/>
+        <result column="project_description" property="projectDescription"/>
+        <result column="project_description" property="projectDescription"/>
+        <result column="follower" property="follower"/>
+        <result column="status" property="status"/>
+        <result column="money" property="money"/>
+        <result column="supportmoney" property="supportMoney"/>
+        <result column="percentage" property="percentage"/>
+        <result column="deploydate" property="deployDate"/>
+        <result column="supporter" property="supporterCount"/>
+        <result column="day" property="day"></result>
+        <result column="header_picture_path" property="headerPicturePath"/>
+        <collection property="detailPicturePathList"
+                    column="id"
+                    ofType="java.lang.String"
+                    select="selectDetailPicturePathByProjectId"
+        >
+        </collection>
+        <collection
+                property="returnDetailVOList"
+                column="id"
+                ofType="com.cjc.crow.entity.ReturnDetailVO"
+                select="selectDetailReturnVOByProjectId"
+        ></collection>
+    </resultMap>
+
+    <select id="selectDetailReturnVOByProjectId" resultType="com.cjc.crow.entity.ReturnDetailVO">
+ SELECT
+	id returnId,
+	projectid,
+	supportmoney supportMoney,
+	content content,
+	signalpurchase signalPurchase,
+	purchase purchase,
+	freight freight,
+	returndate returnDate
+FROM t_return
+WHERE projectid=#{id}
+
+    </select>
+
+    <select id="selectDetailPicturePathByProjectId" resultType="java.lang.String">
+        select item_pic_path from t_project_item_pic
+            where projectid = #{id}
+    </select>
+
+    <select id="selectDetailProjectVO" resultMap="detailProjectResultMap">
+SELECT
+	p.id,
+	p.project_name,
+	p.project_description ,
+	p.follower,
+	p.status status,
+	p.money money,
+	p.supportmoney,
+	supportmoney/money * 100 percentage,
+	p.deploydate,
+	p.supporter,
+	p.day,
+	p.header_picture_path 
+ FROM t_project p WHERE p.id = #{id}
+    </select>
+
+    <resultMap id="portalTypeVO" type="com.cjc.crow.entity.PortalTypeVO">
+        <id property="id" column="id"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <collection
+                property="portalProjectVOList"
+                column="id"
+                ofType="com.cjc.crow.entity.PortalProjectVO"
+                select="selectPortalProjectVOByTypeId">
+        </collection>
+    </resultMap>
+
+    <select id="selectPortalTypeVOList" resultMap="portalTypeVO">
+        select id,name,remark from t_type
+    </select>
+
+    <select id="selectPortalProjectVOByTypeId" resultType="com.cjc.crow.entity.PortalProjectVO">
+    SELECT
+p.id projectId,
+p.project_name projectName,
+p.header_picture_path headerPicturePath,
+p.money money,
+p.deploydate deployDate,
+p.supporter supporter,
+p.supportmoney/p.money*100 percentage
+FROM t_project p LEFT JOIN t_project_type pt
+	ON p.id = pt.projectid WHERE typeid = #{id}
+  </select>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cjc.crow.entity.ProjectPOExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_project
+        <if test="_parameter != nulsel">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <delete id="deleteByExample" parameterType="com.cjc.crow.entity.ProjectPOExample">
+        delete from t_project
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+
+    <!--  void insertRelationship(List<Integer> typeIdList, Integer projectId);-->
+
+    <insert id="insertTypeRelationship">
+        insert into t_project_type(projectId,typeId) values
+        <foreach collection="typeIdList" item="typeId" separator=",">
+            (#{projectId},#{typeId})
+        </foreach>
+    </insert>
+
+    <!--  void insertTagRelationship(@Param("tagIdList") List<Integer> tagIdList, @Param("projectId") Integer projectId);-->
+
+    <insert id="insertTagRelationship">
+        insert into t_project_tag(projectId,tagId) values
+        <foreach collection="tagIdList" item="tagId" separator=",">
+            (#{projectId},#{tagId})
+        </foreach>
+    </insert>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.cjc.crow.entity.ProjectPO">
+    insert into t_project (id, project_name, project_description, 
+      money, day, status, 
+      deploydate, supportmoney, supporter, 
+      completion, memberid, createdate, 
+      follower, header_picture_path)
+    values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
+      #{money,jdbcType=BIGINT}, #{day,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{deploydate,jdbcType=VARCHAR}, #{supportmoney,jdbcType=BIGINT}, #{supporter,jdbcType=INTEGER}, 
+      #{completion,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{createdate,jdbcType=VARCHAR}, 
+      #{follower,jdbcType=INTEGER}, #{headerPicturePath,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.cjc.crow.entity.ProjectPO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectName != null">
+                project_name,
+            </if>
+            <if test="projectDescription != null">
+                project_description,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="day != null">
+                day,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="deploydate != null">
+                deploydate,
+            </if>
+            <if test="supportmoney != null">
+                supportmoney,
+            </if>
+            <if test="supporter != null">
+                supporter,
+            </if>
+            <if test="completion != null">
+                completion,
+            </if>
+            <if test="memberid != null">
+                memberid,
+            </if>
+            <if test="createdate != null">
+                createdate,
+            </if>
+            <if test="follower != null">
+                follower,
+            </if>
+            <if test="headerPicturePath != null">
+                header_picture_path,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectDescription != null">
+                #{projectDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=BIGINT},
+            </if>
+            <if test="day != null">
+                #{day,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="deploydate != null">
+                #{deploydate,jdbcType=VARCHAR},
+            </if>
+            <if test="supportmoney != null">
+                #{supportmoney,jdbcType=BIGINT},
+            </if>
+            <if test="supporter != null">
+                #{supporter,jdbcType=INTEGER},
+            </if>
+            <if test="completion != null">
+                #{completion,jdbcType=INTEGER},
+            </if>
+            <if test="memberid != null">
+                #{memberid,jdbcType=INTEGER},
+            </if>
+            <if test="createdate != null">
+                #{createdate,jdbcType=VARCHAR},
+            </if>
+            <if test="follower != null">
+                #{follower,jdbcType=INTEGER},
+            </if>
+            <if test="headerPicturePath != null">
+                #{headerPicturePath,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.cjc.crow.entity.ProjectPOExample" resultType="java.lang.Integer">
+        select count(*) from t_project
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_project
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.projectName != null">
+                project_name = #{record.projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.projectDescription != null">
+                project_description = #{record.projectDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="record.money != null">
+                money = #{record.money,jdbcType=BIGINT},
+            </if>
+            <if test="record.day != null">
+                day = #{record.day,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.deploydate != null">
+                deploydate = #{record.deploydate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.supportmoney != null">
+                supportmoney = #{record.supportmoney,jdbcType=BIGINT},
+            </if>
+            <if test="record.supporter != null">
+                supporter = #{record.supporter,jdbcType=INTEGER},
+            </if>
+            <if test="record.completion != null">
+                completion = #{record.completion,jdbcType=INTEGER},
+            </if>
+            <if test="record.memberid != null">
+                memberid = #{record.memberid,jdbcType=INTEGER},
+            </if>
+            <if test="record.createdate != null">
+                createdate = #{record.createdate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.follower != null">
+                follower = #{record.follower,jdbcType=INTEGER},
+            </if>
+            <if test="record.headerPicturePath != null">
+                header_picture_path = #{record.headerPicturePath,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_project
+        set id = #{record.id,jdbcType=INTEGER},
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+        project_description = #{record.projectDescription,jdbcType=VARCHAR},
+        money = #{record.money,jdbcType=BIGINT},
+        day = #{record.day,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=INTEGER},
+        deploydate = #{record.deploydate,jdbcType=VARCHAR},
+        supportmoney = #{record.supportmoney,jdbcType=BIGINT},
+        supporter = #{record.supporter,jdbcType=INTEGER},
+        completion = #{record.completion,jdbcType=INTEGER},
+        memberid = #{record.memberid,jdbcType=INTEGER},
+        createdate = #{record.createdate,jdbcType=VARCHAR},
+        follower = #{record.follower,jdbcType=INTEGER},
+        header_picture_path = #{record.headerPicturePath,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+</mapper>

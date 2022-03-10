@@ -1,0 +1,61 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+<!--    扫描controller到ioc容器中-->
+    <context:component-scan base-package="com.cjc.funding.mvc">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+<!--    开启mvc注解扫描-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+<!--    配置json转换器-->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+<!--    配置异常处理器,xml的异常处理器会处理xml配置的controller也会处理注解的controller-->
+    <bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">system-error</prop>
+            </props>
+        </property>
+    </bean>
+
+<!--    试图映射-->
+<!--    跳转到登录页面-->
+    <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
+<!--    跳转到主页面-->
+    <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
+<!--    跳转到admin-page-->
+    <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"/>
+<!--    跳转到role-page-->
+    <mvc:view-controller path="/role/to/page.html" view-name="role-page"/>
+<!--    &lt;!&ndash;    注册拦截器&ndash;&gt;-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--&lt;!&ndash;            /**代表多层路径-->
+<!--                /* 代表一层路径&ndash;&gt;-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <mvc:exclude-mapping path="/admin/to/login/page.html"/>-->
+<!--            <mvc:exclude-mapping path="/admin/do/doLogin.html"/>-->
+<!--            <mvc:exclude-mapping path="/admin/do/doLogout.html"/>-->
+<!--            <bean class="com.cjc.funding.mvc.interceptor.LoginInterceptor"></bean>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+</beans>

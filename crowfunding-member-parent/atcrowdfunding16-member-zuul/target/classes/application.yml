@@ -1,0 +1,44 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: crow-zuul
+  redis:
+    host: 192.168.52.138
+    jedis:
+      pool:
+        max-idle: 100
+  session:
+    store-type: redis
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+zuul:
+  ignored-services: "*"
+  routes: # 定义模块的路由规则
+    crowd-portal:
+      service-id: crow-authenticate
+      path: /**
+    crowd-project:
+      service-id: crow-project
+      path: /project/**
+    crowd-order:
+      service-id: crow-order
+      path: /order/**
+    crowd-pay:
+      service-id: crow-pay
+      path: /pay/**
+  host:
+    connect-timeout-millis: 1500
+    socket-timeout-millis: 60000
+  sensitive-headers: "*"
+ribbon:
+  ReadTimeout: 60000
+  SocketTimeout: 60000
+
+
+

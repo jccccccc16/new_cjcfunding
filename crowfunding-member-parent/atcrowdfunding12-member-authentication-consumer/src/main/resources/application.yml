@@ -1,0 +1,34 @@
+server:
+  port: 4000
+
+spring:
+  application:
+    name: crow-authenticate
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.52.138
+    jedis:
+      pool:
+        max-idle: 100
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+
+short:
+  message:
+    appcode: 1be445bc362045bc96233015517f1109
+    host: http://dingxin.market.alicloudapi.com
+    path: /dx/sendSms
+    method: post
+    tpl-id: TP1711063
+
+logging:
+  level:
+    com.cjc.crow.handler.MemberHandler: debug
+

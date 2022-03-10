@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="192.168.52.130" id="62dff0fd-89dc-4a4e-b5a2-e5615c598453" port="22" customName="Myserver" nameFormat="CUSTOM" username="root">
+        <option name="customName" value="Myserver" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

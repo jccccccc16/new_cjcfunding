@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/cjccrowfunding.iml" filepath="$PROJECT_DIR$/.idea/cjccrowfunding.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcorowdfunding02-admin-webui/cjcorowdfunding02-admin-webui.iml" filepath="$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcorowdfunding02-admin-webui/cjcorowdfunding02-admin-webui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cjcrowdfunding-common-reverse/cjcrowdfunding-common-reverse.iml" filepath="$PROJECT_DIR$/cjcrowdfunding-common-reverse/cjcrowdfunding-common-reverse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcrowdfunding01-admin-parent.iml" filepath="$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcrowdfunding01-admin-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcrowdfunding03-admin-component/cjcrowdfunding03-admin-component.iml" filepath="$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcrowdfunding03-admin-component/cjcrowdfunding03-admin-component.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcrowdfunding04-admin-entity/cjcrowdfunding04-admin-entity.iml" filepath="$PROJECT_DIR$/cjcrowdfunding01-admin-parent/cjcrowdfunding04-admin-entity/cjcrowdfunding04-admin-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cjcrowdfunding05-common-util/cjcrowdfunding05-common-util.iml" filepath="$PROJECT_DIR$/cjcrowdfunding05-common-util/cjcrowdfunding05-common-util.iml" />
+    </modules>
+  </component>
+</project>

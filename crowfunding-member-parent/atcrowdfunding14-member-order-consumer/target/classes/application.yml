@@ -1,0 +1,29 @@
+server:
+  port: 6000
+
+spring:
+  application:
+    name: crow-order
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.52.138
+    jedis:
+      pool:
+        max-idle: 100
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+
+aliyun:
+  oss:
+    accessKeySecret: qDFYomOzkzO6L9LAlFtK0xgo5RAl3T
+    accessKeyId: LTAI4GGcB8CgTQZNjzffvm4M
+    bucketDomain: http://cjcfirstbucket.oss-cn-guangzhou.aliyuncs.com
+    bucketName: cjcfirstbucket
+    endpoint: http://oss-cn-guangzhou.aliyuncs.com

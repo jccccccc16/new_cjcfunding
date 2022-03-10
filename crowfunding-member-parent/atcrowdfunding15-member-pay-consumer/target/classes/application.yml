@@ -1,0 +1,32 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: crow-pay
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.52.138
+    jedis:
+      pool:
+        max-idle: 100
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+
+ali:
+  pay:
+    alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgBrgK3AG1euBlBBF/MweN0j468YqbxtVD7a0jr4hNYLSl5zkgZvfUyfLDP5PV1cxTwIYVz68FC+lm4V64iwQPVNS+0w/hodYIa7kiXKvQvBk7kEjJO3+/7Q9BQSUdvAQW3V+NLCQOcj9t/AubpdeCq3K5r+HWXJGQ89ZG73kXo7x6Q39gKb3iM02fjCF812GRoNDu58RHBjTOLPSYikoFbuaetCuysT1e2e8pATThpBIoGn8D7p4+KaNMfjDFexNdwoLEek/SosK72dcq4FjKfMH2QH8ovQAH+KH0F19ZL1VxXkzclwAE19fUFshbafHRQnLUWby7utuXjYtphacAQIDAQAB
+    app-id: 2016110300788957
+    charset: utf-8
+    gateway-url: https://openapi.alipaydev.com/gateway.do
+    merchant-private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVyvR68VfSmCLjKZlm1LdLwaD/fh533kYH4dQnH0PO8EJ+IW4D5mkjNvkt37TBhrBCJmYl85imXwE/u+mA4P6Bd9EWm9F3i+59Uy5FZoeqNOBmh0+fEBlSz41Y2eveTQi7880azpSxpDLrzX8RJTRGozLXAx1wxWbIlQTBF0tJXy7gfsKZkyQM/ngjObHVhByR+HzGHf0zRdHGcUQf1m4Yjngo++SNbmwS4HoCkmMnuLnDgqHIAYG3bnbcNPn7fOAyL6O30Qws5O8UKqfJO5PsCs0VlDElhxEynoatZ9TNNg0b994/hcCQpxJEjJV2HX+tPOf2Ddc5Zjyd6j67mMwtAgMBAAECggEAHq14MI2o/Npnmrp0TlkWSQ+Y13qO5uHA2fBoMLL4gjM2ivpxu56+vZWOptSAAnqBMqsGlJM1Gi2u5cyoX9q0hPNzAPxcg+1GpKgae+ApvLQjmRvxNJRpe0pCmoXXBqokNcoSoYDZdyA3xY9KjMpf0G+wA9UBfI0RJddPJ/SLWLUzf6oQ/V/uHuT3MYJE2br+V96MJpmr/Xtpro/s6xnHyDi1dqn2jy0lB5frBtOjz1oyJqK+8XVvvF2X82MpH6nPVVVaPaoPjx5wYa3rGqX0wFQCgMGXYRSDRU5u2xCx9XxqMV2ljKdHGPQU0nTTakiE9nuZ0zahN92uyF6xyWR3gQKBgQDFrxoBazXC8lL6lj6x6TrBMx+V1lif/XyPoq9lCW8D9wLJU9AKCkAZ5KRmkkoruABOPrLS2Fy8X52f0BRO2Tyiyrrll/P00Eyo/7n9e3GWC0IvOZ+TRwRW3H1CuA9HivhLSy32i4EAlogImGbxyzZ7Y/vACHZYf6IvTstTQlVcfQKBgQDB+yhlB74+EfOpXy1Oz0KahjxF3GVgbjdJzryUOY/BrUQqIjMdvh9m4UaEJZQxH5MpFxX3rCfRoUKf3nvAjmqGbrqYwoOJ2r6okkdzyC4s6DUqTKNTA2Z0auzjMNMYrhym9vnp8rcge5sEgy9BMNXdgqdrn06NDyiEXN0Jwp0tcQKBgQCyFvJlrtELJEXPDMXEf6n33XeqBCVpVPL/b391lY8W0lQHTeNQ+DURXqMg6M+7HRPhaaiuPE8nQTh+ffWdpyVyPxMqvb8AoRs+8Mr86lXE57WjV9VD2Cm3mwGZtrnFKRRQuJTa1IjOH87Dd5DeacVWWhe1w6niRnG1DtYr1smR/QKBgEdBhWMnZwDSA1myNqh+hg7RRI69GRhFJFYedTNVubMBfMqlaXWBg3N9STP9weQRnzM24cDrIm1k+V5Ukcz4A7WCM1UuDrey/NpbcZfcbuncGruBD3XNB/O323DRXJnyS2Ah1UfU+uQZw6XysocV81m9RtbH3EkAyndkzWVqceZhAoGAPAIj3sqqNKjfD+mxyiYCJ4lwgZZxBYERVdftLMigfR8Droz9Qa2MeHgPCvRRfHJYiPRQGGS/wDizNJBnISRJ9n36Gf5jXrfP5yqCcYRQSyh8cO0YpofOKSpLHSrsctELXRuG1g10rk74Ah+qgm/TBSD9/Zr4m0/HkipPKi7iJ4w=
+    notify-url: http://localhost/pay/notify
+    return-url: http://localhost/pay/return
+    sign-type: RSA2

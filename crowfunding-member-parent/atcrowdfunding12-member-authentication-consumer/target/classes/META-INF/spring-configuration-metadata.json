@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "short.message",
+      "type": "com.cjc.crow.config.ShortMessageProperties",
+      "sourceType": "com.cjc.crow.config.ShortMessageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "short.message.appcode",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.ShortMessageProperties"
+    },
+    {
+      "name": "short.message.host",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.ShortMessageProperties"
+    },
+    {
+      "name": "short.message.method",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.ShortMessageProperties"
+    },
+    {
+      "name": "short.message.path",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.ShortMessageProperties"
+    },
+    {
+      "name": "short.message.tpl-id",
+      "type": "java.lang.String",
+      "sourceType": "com.cjc.crow.config.ShortMessageProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,21 @@
+server:
+  port: 2000
+
+spring:
+  application:
+    name: crow-mysql
+  datasource:
+    name: mydb
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.52.138:3306/cjcfunding?serverTimezone=UTC
+    username: root
+    password: cjcisgood
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
