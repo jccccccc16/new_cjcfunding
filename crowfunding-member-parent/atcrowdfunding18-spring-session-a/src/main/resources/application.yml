@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: 192.168.52.140
+    host: 114.132.251.6
     jedis:
       pool:
         max-idle: 100

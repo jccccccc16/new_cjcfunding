@@ -53,9 +53,56 @@ public class MemberHandler {
 
         session.invalidate();
 
-        return "redirect:http://localhost:8080";
+        return "redirect:http://localhost:80";
     }
 
+
+//    @RequestMapping("/auth/member/send/short/message.json")
+//    public @ResponseBody
+//    ResultEntity<String> sendMessage(@RequestParam("phoneNum") String phoneNum) {
+//
+//        logger.debug("获取的手机号码为: " + phoneNum);
+//
+////        ResultEntity<String> sendMessageResultEntity = CrowdUtil.sendCodeByShortMessage(
+////                shortMessageProperties.getHost(),
+////                shortMessageProperties.getPath(),
+////                shortMessageProperties.getMethod(),
+////                shortMessageProperties.getAppcode(),
+////                phoneNum, shortMessageProperties.getTpl_id());
+//
+//        ResultEntity<String> sendMessageResultEntity = CrowdUtil.sendCodeByShortMessage(phoneNum);
+//
+//        // 判断是否发送成功
+//        if (ResultEntity.SUCCESS.equals(sendMessageResultEntity.getResult())) {
+//
+//            // 获取验证码
+//            String code = sendMessageResultEntity.getData();
+//
+//            logger.debug("验证码: " + code);
+//
+//            String key = CrowdConstant.REDIS_CODE_PREFIX + phoneNum;
+//
+//            ResultEntity<String> saveCodeResultEntity =
+//                    redisRemoteService.setRedisKeyValueRemoteWithTimeout(key, code, 15, TimeUnit.MINUTES);
+//
+//            // 如果存入redis成功
+//            if (ResultEntity.SUCCESS.equals(saveCodeResultEntity.getResult())) {
+//
+//                logger.debug("saveCodeResultEntity: " + saveCodeResultEntity);
+//
+//                return ResultEntity.successWithoutData();
+//
+//            } else { // 存入失败
+//
+//                return saveCodeResultEntity;
+//            }
+//        } else {  // 发送失败
+//
+//            logger.debug("saveCodeResultEntity: " + sendMessageResultEntity);
+//
+//            return sendMessageResultEntity;
+//        }
+//    }
 
     @RequestMapping("/auth/member/send/short/message.json")
     public @ResponseBody
@@ -70,39 +117,9 @@ public class MemberHandler {
 //                shortMessageProperties.getAppcode(),
 //                phoneNum, shortMessageProperties.getTpl_id());
 
-        ResultEntity<String> sendMessageResultEntity = CrowdUtil.sendCodeByShortMessage(phoneNum);
-
-        // 判断是否发送成功
-        if (ResultEntity.SUCCESS.equals(sendMessageResultEntity.getResult())) {
-
-            // 获取验证码
-            String code = sendMessageResultEntity.getData();
-
-            logger.debug("验证码: " + code);
-
-            String key = CrowdConstant.REDIS_CODE_PREFIX + phoneNum;
-
-            ResultEntity<String> saveCodeResultEntity =
-                    redisRemoteService.setRedisKeyValueRemoteWithTimeout(key, code, 15, TimeUnit.MINUTES);
-
-            // 如果存入redis成功
-            if (ResultEntity.SUCCESS.equals(saveCodeResultEntity.getResult())) {
-
-                logger.debug("saveCodeResultEntity: " + saveCodeResultEntity);
-
-                return ResultEntity.successWithoutData();
-
-            } else { // 存入失败
-
-                return saveCodeResultEntity;
-            }
-        } else {  // 发送失败
-
-            logger.debug("saveCodeResultEntity: " + sendMessageResultEntity);
-
-            return sendMessageResultEntity;
-        }
+       return ResultEntity.successWithoutData();
     }
+
 
 
     @RequestMapping(value = "/auth/member/register", method = RequestMethod.POST)
@@ -115,53 +132,54 @@ public class MemberHandler {
         // ② 将memberVo中的手机号进行拼接成redis中的key
         String key = CrowdConstant.REDIS_CODE_PREFIX + phoneNum;
 
-        // ③ 根据此key在redis中查找
-        ResultEntity<String> redisResultEntity = redisRemoteService.getRedisStringByKeyRemote(key);
+//        // ③ 根据此key在redis中查找
+//        ResultEntity<String> redisResultEntity = redisRemoteService.getRedisStringByKeyRemote(key);
+//
+//        // ④ 检查查询操作是否有效
+//        String result = redisResultEntity.getResult();
+//
+//        // 判断是否失败
+//        if (ResultEntity.FAILED.equals(result)) {
+//
+//            logger.info(redisResultEntity.getMessage());
+//
+//            map.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, redisResultEntity.getMessage());
+//
+//            return "member-reg";
+//        }
 
-        // ④ 检查查询操作是否有效
-        String result = redisResultEntity.getResult();
 
-        // 判断是否失败
-        if (ResultEntity.FAILED.equals(result)) {
-
-            logger.info(redisResultEntity.getMessage());
-
-            map.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, redisResultEntity.getMessage());
-
-            return "member-reg";
-        }
-
-
-        // 2.判断验证码是否为空
-        String redisCode = redisResultEntity.getData();
+//        // 2.判断验证码是否为空
+//        String redisCode = redisResultEntity.getData();
 
         // 判断验证是否为空
-        if (redisCode == null || redisCode.equals("")) {
+//        if (redisCode == null || redisCode.equals("")) {
+//
+//            logger.info("redis中的验证码为空");
+//
+//            map.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_CODE_NOT_EXIST);
+//
+//            return "member-reg";
+//        }
 
-            logger.info("redis中的验证码为空");
 
-            map.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_CODE_NOT_EXIST);
-
-            return "member-reg";
-        }
-
-        // 获取表单的验证码
-        String formCode = memberVO.getCode();
-
-        // 如果验证码不正确
-        if (!formCode.equals(redisCode)) {
-
-            logger.info("验证码不正确");
-
-            map.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_CODE_INVALID);
-
-            return "member-reg";
-
-        }
+//        // 获取表单的验证码
+//        String formCode = memberVO.getCode();
+//
+//        // 如果验证码不正确
+//        if (!formCode.equals(redisCode)) {
+//
+//            logger.info("验证码不正确");
+//
+//            map.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_CODE_INVALID);
+//
+//            return "member-reg";
+//
+//        }
 
 
         // ① 正确，将验证码移出
-        redisRemoteService.removeRedisKeyRemote(key);
+//        redisRemoteService.removeRedisKeyRemote(key);
 
         // 4.执行密码加密
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -197,30 +215,30 @@ public class MemberHandler {
 
     }
 
-    @RequestMapping(value = "/auth/member/do/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/member/do/login", method = RequestMethod.POST)
     public String login(
             @RequestParam("loginacct") String loginacct,
             @RequestParam("userpswd") String userpswd,
             ModelMap modelMap,
-            HttpSession session){
+            HttpSession session) {
 
         ResultEntity<Member> loginAcctResultEntity = mySqlRemoteService.getMemberByLoginAcct(loginacct);
 
         // 1.如果失败，跳转到登录页面
-        if(ResultEntity.FAILED.equals(loginAcctResultEntity.getResult())){
+        if (ResultEntity.FAILED.equals(loginAcctResultEntity.getResult())) {
 
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE,loginAcctResultEntity.getMessage());
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, loginAcctResultEntity.getMessage());
 
-            logger.info("loginAcctResultEntity"+loginAcctResultEntity);
+            logger.info("loginAcctResultEntity" + loginAcctResultEntity);
 
             return "member-login";
         }
 
         Member mysqlMember = loginAcctResultEntity.getData();
 
-        if(mysqlMember == null){
+        if (mysqlMember == null) {
 
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE,CrowdConstant.MESSAGE_LOGIN_FAILED);
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_LOGIN_FAILED);
 
             return "member-login";
         }
@@ -235,10 +253,10 @@ public class MemberHandler {
 
         // 将页面的密码和数据中查找的密码对比
         // 密码不正确
-        if(!bCryptPasswordEncoder.matches(userpswd,mysqlPswdEncode)){
+        if (!bCryptPasswordEncoder.matches(userpswd, mysqlPswdEncode)) {
 
             // 返回登录页面
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE,CrowdConstant.MESSAGE_LOGIN_FAILED);
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, CrowdConstant.MESSAGE_LOGIN_FAILED);
 
             return "member-login";
         }
@@ -248,13 +266,12 @@ public class MemberHandler {
         MemberLoginVO memberLoginVO = new MemberLoginVO();
 
         // ①属性赋值
-        BeanUtils.copyProperties(mysqlMember,memberLoginVO);
+        BeanUtils.copyProperties(mysqlMember, memberLoginVO);
 
-        session.setAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER,memberLoginVO);
+        session.setAttribute(CrowdConstant.ATTR_NAME_LOGIN_MEMBER, memberLoginVO);
 
         // 跳转到用户中心页面
         return "redirect:http://localhost/auth/member/to/center.html";
-
 
 
     }
@@ -278,7 +295,6 @@ public class MemberHandler {
 //        return "member-center";
 //    }
 //
-
 
 
 }

@@ -43,7 +43,7 @@ public class CrowTest {
     @Test
     public void test(){
         for(int i=0;i<123;i++){
-            adminService.save(new Admin(null,"cjc"+i,"cjc"+i,
+            adminService.save(new Admin(null,"admin"+i,"admin"+i,
                     "cjc1316@qq.com","cjc",null));
         }
     }

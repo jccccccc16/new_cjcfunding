@@ -6,6 +6,8 @@ import com.cjc.crow.entity.MemberLoginVO;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,8 @@ import java.io.IOException;
  **/
 @Component
 public class CrowdAccessFilter extends ZuulFilter {
+
+    private Logger logger = LoggerFactory.getLogger(CrowdAccessFilter.class);
 
     public String filterType() {
 
@@ -81,7 +85,7 @@ public class CrowdAccessFilter extends ZuulFilter {
 
         if(loginMember==null){
         // 跳转到登录页面
-
+            logger.info("session中loginMember为空");
             HttpServletResponse response = requestContext.getResponse();
 
             session.setAttribute(CrowdConstant.ATTR_NAME_MESSAGE,CrowdConstant.MESSAGE_ACCESS_FORBIDEN);

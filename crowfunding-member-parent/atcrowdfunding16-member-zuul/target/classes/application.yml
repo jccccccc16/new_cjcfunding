@@ -5,7 +5,7 @@ spring:
   application:
     name: crow-zuul
   redis:
-    host: 192.168.52.138
+    host: 114.132.251.6
     jedis:
       pool:
         max-idle: 100
@@ -39,6 +39,15 @@ zuul:
 ribbon:
   ReadTimeout: 60000
   SocketTimeout: 60000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 3000
+
 
 
 

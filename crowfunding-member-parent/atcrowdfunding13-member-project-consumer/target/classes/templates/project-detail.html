@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-<div class="navbar-wrapper">
+<div class="navbar-wrapper" th:replace="navbar-include::nav">
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -72,7 +72,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
                                     class="glyphicon glyphicon-user"></i> 张三<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
+                                <li><a href="http://localhost/auth/member/to/center.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
                                 <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
                                 <li class="divider"></li>
                                 <li><a href="index.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>

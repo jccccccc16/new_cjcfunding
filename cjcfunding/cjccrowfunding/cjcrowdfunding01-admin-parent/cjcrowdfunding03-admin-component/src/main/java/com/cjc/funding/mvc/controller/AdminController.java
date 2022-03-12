@@ -69,6 +69,13 @@ public class AdminController {
 
     }
 
+    /**
+     * 删除
+     * @param id
+     * @param pageNum
+     * @param keyword
+     * @return
+     */
     @PreAuthorize(value = "hasRole('PROADMIN')")
     @RequestMapping("/admin/delect/{id}/{pageNum}/{keyword}.html")
     public String deleteAdmin(
@@ -82,6 +89,11 @@ public class AdminController {
     }
 
 
+    /**
+     * 保存
+     * @param admin
+     * @return
+     */
     @PreAuthorize(value = "hasRole('PROADMIN')")
     @RequestMapping("/admin/do/save.html")
     public String saveAdmin(Admin admin){
@@ -124,7 +136,6 @@ public class AdminController {
         adminService.getAdminByLoginAcct(loginAcct);
         ResultEntity<Object> objectResultEntity = ResultEntity.successWithMessageNoData(CrowConstant.MESSAGE_LOGIN_ACCOUNT_ENABLED);
         return objectResultEntity;
-
     }
 
 
